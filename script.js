@@ -234,7 +234,8 @@ try {
   existingData.events = existingData.events.filter(event => event.league !== leagueId);
   const datesToFetch = [
     formatDateYMD(new Date(), -1), // yesterday
-    formatDateYMD(new Date(), 0)   // today
+    formatDateYMD(new Date(), 0),  // today
+    formatDateYMD(new Date(), 1)   // tomorrow
   ];
   // Process all dates
   const eventPromises = datesToFetch.map(async (day) => {
