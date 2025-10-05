@@ -30,10 +30,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
-dotenv.config();
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, '.env') });
+
 const dataFile = path.join(__dirname, 'www', 'events.json');
 const leagueId = process.argv[2] || 'NFL';
 const API_KEY = process.env.API_KEY || '';
