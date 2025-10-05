@@ -1,4 +1,22 @@
 /**
+ * Sports API - A script that pulls sports event data from SportsDB API
+ * Copyright (C) 2025 Johnathan Pulos
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
+/**
  * This script will pull data from the sportsdb API and store it in a
  * JSON file in a format that can be used by a Raspberry Pi project. We are using
  * the free API since we will not be making many requests.
