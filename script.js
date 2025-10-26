@@ -29,7 +29,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { NFLParser } from './src/parsers/nfl-parser.js';
-
+import { NBAParser } from './src/parsers/nba-parser.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -45,10 +45,11 @@ const leagueId = process.argv[2] || 'NFL';
  * @returns The response data or an error object
  */
 const fetchLeagueData = async (leagueId) => {
-  let url = '';
   let parser = null;
-  if (leagueId === 'NFL') {
+  if (leagueId.toUpperCase() === 'NFL') {
     parser = new NFLParser();
+  } else if (leagueId.toUpperCase() === 'NBA') {
+    parser = new NBAParser();
   } else {
     system.exit(1);
   }
