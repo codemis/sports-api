@@ -17,12 +17,22 @@ export class NFLParser {
    */
   parse(response) {
     if (response && response.events) {
-      return response.events.map(event => this.formatEvent(event));
+      return response.events.map(event => this.formatEvent(event)).filter(Boolean);
     }
     return [];
   }
 
+  /**
+   * Format the data for our API
+   *
+   * @param {any} event The event data
+   *
+   * @returns Formatted event data
+   */
   formatEvent(event) {
+    if (!event || !event.competitions || event.competitions.length === 0) {
+      return null;
+    }
     const { date: formattedDate, time } = formatEventDateTime(event.date);
     const competition = event.competitions[0];
     const teamOne = competition.competitors[0];
