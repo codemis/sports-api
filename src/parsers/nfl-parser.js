@@ -70,8 +70,9 @@ export class NFLParser {
       date: formattedDate,
       time: time,
       status: status,
+      status_type: event.status.type.name || '',
       league: 'NFL',
-      leagueBadge: 'https://a.espncdn.com/i/teamlogos/leagues/500-dark/nfl.png',
+      league_badge: 'https://a.espncdn.com/i/teamlogos/leagues/500-dark/nfl.png',
       team_one: {
         id: teamOne.team.id,
         name: teamOne.team.name,
