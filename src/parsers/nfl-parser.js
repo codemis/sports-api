@@ -75,14 +75,16 @@ export class NFLParser {
       league_badge: 'https://a.espncdn.com/i/teamlogos/leagues/500-dark/nfl.png',
       team_one: {
         id: teamOne.team.id,
-        name: teamOne.team.name,
         badge: teamOne.team.logo,
+        location: teamOne.team.location,
+        name: teamOne.team.name,
         score: parseInt(teamOne.score, 10) || 0
       },
       team_two: {
         id: teamTwo.team.id,
-        name: teamTwo.team.name,
         badge: teamTwo.team.logo,
+        location: teamTwo.team.location,
+        name: teamTwo.team.name,
         score: parseInt(teamTwo.score, 10) || 0
       }
     };
