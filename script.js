@@ -30,6 +30,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { NFLParser } from './src/parsers/nfl-parser.js';
 import { NBAParser } from './src/parsers/nba-parser.js';
+import { MLBParser } from './src/parsers/mlb-parser.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -50,6 +51,8 @@ const fetchLeagueData = async (leagueId) => {
     parser = new NFLParser();
   } else if (leagueId.toUpperCase() === 'NBA') {
     parser = new NBAParser();
+  } else if (leagueId.toUpperCase() === 'MLB') {
+    parser = new MLBParser();
   } else {
     system.exit(1);
   }
