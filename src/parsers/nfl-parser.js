@@ -75,6 +75,7 @@ export class NFLParser {
       league_badge: 'https://a.espncdn.com/i/teamlogos/leagues/500-dark/nfl.png',
       team_one: {
         id: teamOne.team.id,
+        abbreviation: teamOne.team.abbreviation,
         badge: teamOne.team.logo,
         location: teamOne.team.location,
         name: teamOne.team.name,
@@ -82,6 +83,7 @@ export class NFLParser {
       },
       team_two: {
         id: teamTwo.team.id,
+        abbreviation: teamTwo.team.abbreviation,
         badge: teamTwo.team.logo,
         location: teamTwo.team.location,
         name: teamTwo.team.name,
