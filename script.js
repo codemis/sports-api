@@ -100,11 +100,36 @@ const sortEvents = (events) => {
 try {
   const existingData = await initializeDataFile();
 
-  // Clear any existing data for the current league
+  // Preserve final events from the last week for this league
+  const oneWeekMs = 7 * 24 * 60 * 60 * 1000;
+  const cutoff = Date.now() - oneWeekMs;
+  const preserved = existingData.events.filter(event => {
+    if (event.league !== leagueId) return false;
+    if (event.status_type !== 'STATUS_FINAL') return false;
+    if (!event.date) return false;
+    let time = event.time || '00:00:00';
+    if (/^\d{1,2}:\d{2}$/.test(time)) time += ':00';
+    let dt = Date.parse(`${event.date}T${time}Z`);
+    if (isNaN(dt)) dt = Date.parse(`${event.date} ${time}`);
+    if (isNaN(dt)) return false;
+    return dt >= cutoff;
+  });
+
+  console.log(preserved);
+
+  // Remove all events for current league
   existingData.events = existingData.events.filter(event => event.league !== leagueId);
 
   // Get the new data
   const results = await fetchLeagueData(leagueId);
+
+  // Merge preserved final events not present in results (compare by id)
+  const resultIds = new Set(results.map(r => r.id));
+  for (const ev of preserved) {
+    if (ev.id && !resultIds.has(ev.id)) {
+      results.push(ev);
+    }
+  }
   existingData.events.push(...results);
   
   // Sort and save
