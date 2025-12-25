@@ -36,7 +36,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const dataFile = path.join(__dirname, 'www', 'events.json');
-const leagueId = process.argv[2] || 'NFL';
+let leagueId = process.argv[2] || 'NFL';
+leagueId = leagueId.toUpperCase();
 
 /**
  * Fetch the data for a specific league
@@ -47,11 +48,11 @@ const leagueId = process.argv[2] || 'NFL';
  */
 const fetchLeagueData = async (leagueId) => {
   let parser = null;
-  if (leagueId.toUpperCase() === 'NFL') {
+  if (leagueId === 'NFL') {
     parser = new NFLParser();
-  } else if (leagueId.toUpperCase() === 'NBA') {
+  } else if (leagueId === 'NBA') {
     parser = new NBAParser();
-  } else if (leagueId.toUpperCase() === 'MLB') {
+  } else if (leagueId === 'MLB') {
     parser = new MLBParser();
   } else {
     system.exit(1);
@@ -101,6 +102,7 @@ try {
 
   // Clear any existing data for the current league
   existingData.events = existingData.events.filter(event => event.league !== leagueId);
+  console.log(existingData.events);
   // Get the new data
   const results = await fetchLeagueData(leagueId);
   existingData.events.push(...results);
