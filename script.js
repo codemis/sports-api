@@ -102,7 +102,7 @@ try {
 
   // Clear any existing data for the current league
   existingData.events = existingData.events.filter(event => event.league !== leagueId);
-  console.log(existingData.events);
+
   // Get the new data
   const results = await fetchLeagueData(leagueId);
   existingData.events.push(...results);
