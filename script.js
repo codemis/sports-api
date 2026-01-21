@@ -122,12 +122,20 @@ const sortEvents = (events) => {
 try {
   const existingData = await initializeDataFile();
 
-  // Remove all events for current league
-  existingData.events = existingData.events.filter(event => event.league !== leagueId);
-
   // Get the new data
   const results = await fetchLeagueData(leagueId);
-  existingData.events.push(...results);
+
+  // Update existing events or add new ones
+  results.forEach(newEvent => {
+    const existingIndex = existingData.events.findIndex(e => e.id === newEvent.id);
+    if (existingIndex !== -1) {
+      // Update existing event
+      existingData.events[existingIndex] = newEvent;
+    } else {
+      // Add new event
+      existingData.events.push(newEvent);
+    }
+  });
 
   // iterate all existingData.events and only keep events of last week
   const oneWeekMs = 7 * 24 * 60 * 60 * 1000;
