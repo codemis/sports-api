@@ -87,6 +87,28 @@ const initializeDataFile = async () => {
 };
 
 /**
+ * 
+ * @param {string} date The date to parse
+ * @param {string} time The time
+ *
+ * @returns The date time
+ */
+const parseEventDate = (date, time = '00:00:00') => {
+  // Normalize time format (HH:MM to HH:MM:SS)
+  const normalizedTime = /^\d{1,2}:\d{2}$/.test(time) ? `${time}:00` : time;
+  
+  // Try ISO format first (more reliable)
+  const isoDate = new Date(`${date}T${normalizedTime}Z`);
+  if (!isNaN(isoDate.getTime())) return isoDate.getTime();
+  
+  // Fallback to locale string parsing
+  const localeDate = new Date(`${date} ${normalizedTime}`);
+  if (!isNaN(localeDate.getTime())) return localeDate.getTime();
+  
+  return null;
+};
+
+/**
  * Sort events by league, date, and time
  */
 const sortEvents = (events) => {
@@ -100,38 +122,24 @@ const sortEvents = (events) => {
 try {
   const existingData = await initializeDataFile();
 
-  // Preserve final events from the last week for this league
-  const oneWeekMs = 7 * 24 * 60 * 60 * 1000;
-  const cutoff = Date.now() - oneWeekMs;
-  const preserved = existingData.events.filter(event => {
-    if (event.league !== leagueId) return false;
-    if (event.status_type !== 'STATUS_FINAL') return false;
-    if (!event.date) return false;
-    let time = event.time || '00:00:00';
-    if (/^\d{1,2}:\d{2}$/.test(time)) time += ':00';
-    let dt = Date.parse(`${event.date}T${time}Z`);
-    if (isNaN(dt)) dt = Date.parse(`${event.date} ${time}`);
-    if (isNaN(dt)) return false;
-    return dt >= cutoff;
-  });
-
-  console.log(preserved);
-
   // Remove all events for current league
   existingData.events = existingData.events.filter(event => event.league !== leagueId);
 
   // Get the new data
   const results = await fetchLeagueData(leagueId);
-
-  // Merge preserved final events not present in results (compare by id)
-  const resultIds = new Set(results.map(r => r.id));
-  for (const ev of preserved) {
-    if (ev.id && !resultIds.has(ev.id)) {
-      results.push(ev);
-    }
-  }
   existingData.events.push(...results);
-  
+
+  // iterate all existingData.events and only keep events of last week
+  const oneWeekMs = 7 * 24 * 60 * 60 * 1000;
+  const cutoff = Date.now() - oneWeekMs;
+  existingData.events = existingData.events.filter(event => {
+    if (!event.date) return true;
+    
+    const eventTime = parseEventDate(event.date, event.time);
+    if (eventTime === null) return true; // Keep events with unparseable dates
+    
+    return eventTime >= cutoff;
+  });
   // Sort and save
   existingData.events = sortEvents(existingData.events);
   await fs.writeFile(dataFile, JSON.stringify(existingData));
