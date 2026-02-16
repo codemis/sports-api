@@ -29,8 +29,10 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { NFLParser } from './src/parsers/nfl-parser.js';
-import { NBAParser } from './src/parsers/nba-parser.js';
 import { MLBParser } from './src/parsers/mlb-parser.js';
+import { NBAParser } from './src/parsers/nba-parser.js';
+import { NHLParser } from './src/parsers/nhl-parser.js';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -54,8 +56,11 @@ const fetchLeagueData = async (leagueId) => {
     parser = new NBAParser();
   } else if (leagueId === 'MLB') {
     parser = new MLBParser();
+  } else if (leagueId === 'NHL') {
+    parser = new NHLParser();
   } else {
-    system.exit(1);
+    console.error(`Unsupported league: ${leagueId}`);
+    process.exit(1);
   }
   try {
     const response = await axios.get(parser.url);
