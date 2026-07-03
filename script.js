@@ -32,6 +32,7 @@ import { NFLParser } from './src/parsers/nfl-parser.js';
 import { MLBParser } from './src/parsers/mlb-parser.js';
 import { NBAParser } from './src/parsers/nba-parser.js';
 import { NHLParser } from './src/parsers/nhl-parser.js';
+import { FIFAWorldParser } from './src/parsers/fifa-world-parser.js';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -58,6 +59,8 @@ const fetchLeagueData = async (leagueId) => {
     parser = new MLBParser();
   } else if (leagueId === 'NHL') {
     parser = new NHLParser();
+  } else if (leagueId === 'FIFA') {
+    parser = new FIFAWorldParser();
   } else {
     console.error(`Unsupported league: ${leagueId}`);
     process.exit(1);
