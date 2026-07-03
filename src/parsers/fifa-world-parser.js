@@ -63,7 +63,7 @@ export class FIFAWorldParser {
     } else if (event.status.type.name === 'STATUS_FINAL') {
       status = 'Final';
     } else if (event.status.type.name === 'STATUS_FINAL_PEN') {
-      status = 'Final (Penalty Shootout)';
+      status = 'Final (PS)';
     } else if (event.status.type.name === 'STATUS_HALFTIME') {
       status = 'Halftime';
     } else if (event.status.type.name === 'STATUS_CANCELED') {
