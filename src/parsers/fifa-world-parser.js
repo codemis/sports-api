@@ -68,7 +68,7 @@ export class FIFAWorldParser {
       status = event.status.type.detail || 'In Progress';
     }
     return {
-      id: parseInt(event.id, 10) || 0,
+      id: event.id,
       date: formattedDate,
       time: time,
       status: status,
@@ -76,7 +76,7 @@ export class FIFAWorldParser {
       league: 'FIFA World Cup',
       league_badge: 'https://a.espncdn.com/i/leaguelogos/soccer/500-dark/4.png',
       team_one: {
-        id: parseInt(teamOne.team.id, 10) || 0,
+        id: teamOne.team.id,
         abbreviation: teamOne.team.abbreviation,
         badge: teamOne.team.logo,
         location: teamOne.team.location,
@@ -84,7 +84,7 @@ export class FIFAWorldParser {
         score: parseInt(teamOne.score, 10) || 0
       },
       team_two: {
-        id: parseInt(teamTwo.team.id, 10) || 0,
+        id: teamTwo.team.id,
         abbreviation: teamTwo.team.abbreviation,
         badge: teamTwo.team.logo,
         location: teamTwo.team.location,
