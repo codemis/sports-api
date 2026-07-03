@@ -62,6 +62,8 @@ export class FIFAWorldParser {
       status = 'Scheduled';
     } else if (event.status.type.name === 'STATUS_FINAL') {
       status = 'Final';
+    } else if (event.status.type.name === 'STATUS_HALFTIME') {
+      status = 'Halftime';
     } else if (event.status.type.name === 'STATUS_CANCELED') {
       status = 'Canceled';
     } else if (event.status.type.name === 'STATUS_IN_PROGRESS') {
@@ -73,7 +75,7 @@ export class FIFAWorldParser {
       time: time,
       status: status,
       status_type: event.status.type.name || '',
-      league: 'FIFA World Cup',
+      league: 'FIFA 2026',
       league_badge: 'https://a.espncdn.com/i/leaguelogos/soccer/500-dark/4.png',
       team_one: {
         id: teamOne.team.id,
