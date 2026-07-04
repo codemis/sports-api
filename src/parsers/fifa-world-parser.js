@@ -62,6 +62,10 @@ export class FIFAWorldParser {
       status = 'Scheduled';
     } else if (event.status.type.name === 'STATUS_FINAL') {
       status = 'Final';
+    } else if (event.status.type.name === 'STATUS_FULL_TIME') {
+      status = 'Final (FT)';
+    } else if (event.status.type.name === 'STATUS_FINAL_AET') {
+      status = 'Final (AET)';
     } else if (event.status.type.name === 'STATUS_FINAL_PEN') {
       status = 'Final (PS)';
     } else if (event.status.type.name === 'STATUS_HALFTIME') {
