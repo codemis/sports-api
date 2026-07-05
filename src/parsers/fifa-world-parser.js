@@ -73,7 +73,7 @@ export class FIFAWorldParser {
     } else if (event.status.type.name === 'STATUS_CANCELED') {
       status = 'Canceled';
     } else if (event.status.type.name === 'STATUS_IN_PROGRESS') {
-      status = event.status.type.detail || 'In Progress';
+      status = 'In Progress';
     }
     return {
       id: event.id,
